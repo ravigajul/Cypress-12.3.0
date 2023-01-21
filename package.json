@@ -1,0 +1,24 @@
+{
+	"name": "cypress",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"cy:runheadless": "npx cypress run --browser electron --spec cypress/e2e/3-CypressDemo/4.actions.cy.js",
+		"cy:run": "npx cypress run",
+		"cy:runheaded": "npx cypress run --browser electron --headed --spec cypress/e2e/3-CypressDemo/1.basic.cy.js",
+		"cy:bwsronly": "npx cypress run --browser electron --headed --spec cypress/e2e/3-CypressDemo/5.Browseronly.cy.js",
+		"cy:dashrun": "npx cypress run --browser electron --headed --spec cypress/e2e/3-CypressDemo/3.intercept.cy.js --record --key 938e11fa-25d0-4c54-aed3-a912875e5d22",
+		"cy:runspec": "npx cypress run  --headless --spec cypress/e2e/3-CypressDemo/6.shadowdom.cy.js --record --key 938e11fa-25d0-4c54-aed3-a912875e5d22",
+		"cy:parallel": "npm run cy:runspec --browser chrome --group CHROME  --ci-build-id 1 & npm run cy:runspec --browser edge --group EDGE & npm run cy:runspec --browser electron --group ELECTRON"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"chai": "^4.3.7",
+		"cypress": "^12.3.0",
+		"prettier": "^2.8.1"
+	}
+}
