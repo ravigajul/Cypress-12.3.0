@@ -1,3 +1,4 @@
+/// <reference types="cypress" />
 describe('shadow dom suite', () => {
     it('shadow test', () => {
         cy.visit('https://radogado.github.io/shadow-dom-demo/')
@@ -11,5 +12,6 @@ describe('shadow dom suite', () => {
 
         //is inside a shadow root hence fails
         cy.get('#app').shadow().find('#container').should('have.text','Content in the shadow, without style leaksDynamically generated content')
+        cy.get('tbody button').e
     });
 });
