@@ -85,8 +85,12 @@ npx cypress run --spec cypress/e2e/3-CypressDemo/WebDriverUI/*
 
 ## Run all in cypress version above 10
 ```javascript
-Add the below in e2e in cypress.config.json
+Add the below in e2e in cypress.config.js
 experimentalRunAllSpecs: true,
 ```
-
+## Disable Video during run in cli
+Add the below in cypress.config.js
+```javascript
+"video": false 
+```
 
