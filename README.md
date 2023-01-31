@@ -83,4 +83,10 @@ npx cypress run --spec cypress/e2e/3-CypressDemo/WebDriverUI/webdriverui.cy.js
 npx cypress run --spec cypress/e2e/3-CypressDemo/WebDriverUI/*
 ```
 
+## Run all in cypress version above 10
+```javascript
+Add the below in e2e in cypress.config.json
+experimentalRunAllSpecs: true,
+```
+
 
