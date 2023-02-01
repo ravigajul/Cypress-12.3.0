@@ -93,4 +93,14 @@ Add the below in cypress.config.js
 ```javascript
 "video": false 
 ```
+## Check if element Exists
+```javascript
+cy.get('#element-id').then(($el) => {
+  if ($el.length) {
+    // Element exists
+  } else {
+    // Element doesn't exist
+  }
+});
 
+```
