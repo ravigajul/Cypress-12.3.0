@@ -1,5 +1,20 @@
 # Cypress-12.3.0
 
+## Real World app
+
+```javascript
+npm install -g yarn
+git clone git@github.com:cypress-io/cypress-realworld-app.git
+cd cypress-realworld-app
+yarn dev
+```
+
+## Install along with Dev dependencies
+
+```javascript
+npm install --include=dev
+```
+
 ## When Intellisense Doesn't work
 
 Add the below directive on the top of your spec.cy.js file
@@ -102,5 +117,47 @@ cy.get('#element-id').then(($el) => {
     // Element doesn't exist
   }
 });
-
 ```
+
+## Making the click open the page in same window
+
+```javascript
+ cy.get("#file-upload").invoke('removeAttr','target').click({force:true});
+```
+
+## File Upload
+
+```javascript
+cy.get('input[type="file"]').selectFile('cypress/fixtures/Laptop-icon.JPG');
+```
+
+## Fetching text from alerts 
+
+https://docs.cypress.io/api/cypress-api/catalog-of-events
+
+```javascript
+cy.on('window:alert',(strAlertText)=>{
+  expect(strAlertText).to.equal('I am an alert box!')
+})
+```
+## Alert
+
+```javascript
+cy.on('window:alert',(strAlertText)=>{
+  expect(strAlertText).to.equal('I am an alert box!') //Auto Accepts
+})
+```
+
+## Confirm OK
+
+Notice the change in type of event from window:alert to window:confirm
+
+```javascript
+cy.on('window:confirm',(strAlertText)=>{
+  return true; //clicks Okay
+})
+
+cy.on('window:confirm',(strAlertText)=>{
+  return false; //clicks Cancel
+})
+

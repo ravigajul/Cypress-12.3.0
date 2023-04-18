@@ -1,0 +1,16 @@
+{
+    "plugins": ["@cypress"],
+    "extends": [
+      "plugin:@cypress/dev/general",
+      "plugin:@cypress/dev/tests",
+      "plugin:cypress:recommended",
+      "eslint:recommended"
+    ],
+    "env": {
+      "node": true
+    },
+    "globals": {
+      "cy": true,
+      "Cypress": true
+    }
+  }

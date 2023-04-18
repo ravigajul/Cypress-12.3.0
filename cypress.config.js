@@ -4,7 +4,7 @@ module.exports = defineConfig({
   e2e: {
       //implement node event listeners here
       
-      specPattern: "cypress/e2e/3-CypressDemo/*/*.js",
+      specPattern: "cypress/e2e/3-CypressDemo/*.js",
       screenshotOnRunFailure: true,
       screenshotsFolder: 'cypress/screenshots',
         //clears the screnshots folder
