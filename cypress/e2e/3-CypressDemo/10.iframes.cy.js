@@ -20,5 +20,6 @@ describe('iFrames', () => {
             //Asserting
             expect(text).to.include('Welcome to webdriveruniversity.com we sell a wide range of electrical goods')
         });
+        cy.get('@iframe').contains('#myModal','Close').click();
     });
 });

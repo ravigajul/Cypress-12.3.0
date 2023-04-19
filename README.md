@@ -23,12 +23,35 @@ Add the below directive on the top of your spec.cy.js file
 /// <reference types="cypress" />
 ```
 
-## Get Attribute Value
+## Chaining of commands
+
+```javascript
+it('should click on the elements with command chaining', () => {
+        cy.visit("https://automationteststore.com/"); 
+        //find will look in the narrowed scope of dom retrieved by find and click first element of all elements recevied.
+        cy.get('.container-fluid').find('.prdocutname').eq(0).click();
+    });
+    it('should click the element with contains', () => {
+        cy.visit("https://automationteststore.com/"); 
+        //contains will look for the element with its text in narrows scope by both find and get
+        cy.get('.container-fluid').find('.prdocutname').contains('Skinsheen Bronzer Stick').click()
+    });
+```
+
+## Invoke to get attribute or text or remove attribute
 
 ```java script
 cy.get('#elementId').invoke('attr', 'attributeName').then((value) => {
-    // value will be the attribute value
+// value will be the attribute value
 })
+//alternatively
+cy.get('#elementId').invoke('text').as('text') //invoking the text method of jquery.
+
+//get property value
+cy.get('#elementId').invoke('prop', 'innerText').should('contain','test')
+
+//remove attribute
+ cy.get('#iframe').invoke('removeAttr','target').click();
 ```
 
 ## Cypress Actions
@@ -41,7 +64,17 @@ Refer to this page for different actions like click, select, type, etc
 User it.only to just run that test
 
 ```javascript
-it.only('test',()=>{
+it.only('run only this',()=>{
+
+})
+```
+
+## Skipping an individual test
+
+User it.only to just run that test
+
+```javascript
+it.skip('skip only this',()=>{
 
 })
 ```
@@ -99,16 +132,22 @@ npx cypress run --spec cypress/e2e/3-CypressDemo/WebDriverUI/*
 ```
 
 ## Run all in cypress version above 10
+
 ```javascript
 Add the below in e2e in cypress.config.js
 experimentalRunAllSpecs: true,
 ```
+
 ## Disable Video during run in cli
+
 Add the below in cypress.config.js
+
 ```javascript
 "video": false 
 ```
+
 ## Check if element Exists
+
 ```javascript
 cy.get('#element-id').then(($el) => {
   if ($el.length) {
@@ -131,15 +170,16 @@ cy.get('#element-id').then(($el) => {
 cy.get('input[type="file"]').selectFile('cypress/fixtures/Laptop-icon.JPG');
 ```
 
-## Fetching text from alerts 
+## Fetching text from alerts
 
-https://docs.cypress.io/api/cypress-api/catalog-of-events
+https://docs.cypress.io/api/cypress-api/catalog-of-events  
 
 ```javascript
 cy.on('window:alert',(strAlertText)=>{
   expect(strAlertText).to.equal('I am an alert box!')
 })
 ```
+
 ## Alert
 
 ```javascript
@@ -196,3 +236,56 @@ it('Assert the text from iframe modal popup', () => {
         });
     });
 ```
+
+## Promise Simple Example
+
+```javascript
+
+let promise = new Promise((resolve, reject) => {
+let a = 1 + 1;
+if (a == 2) {
+resolve('Promise Fullfilled!');
+} else {
+reject('Promised is rejected');
+}
+})
+promise
+.then(message => {
+console.log(message + ' Promise is passed');
+})
+.catch(message => {
+console.log(message + ' Promise is rejected');
+})
+```
+
+## GetText and validate
+
+```javascript
+//using invoke method to get the property value of innerText
+cy.get('span.bgnone').invoke('prop','innerText').should('contain','Skinsheen Bronzer Stick');
+//using invoke followed by promise to use chai assertion
+cy.get('span.bgnone').invoke('prop','innerText').then(strText=>{
+expect(strText).to.equal("Skinsheen Bronzer Stick");
+})
+//using promise and jquery
+cy.get('span.bgnone').then(strText=>{
+expect(strText.text()).to.equal("Skinsheen Bronzer Stick");
+})
+```
+
+## Iterating through elements
+
+```javascript
+cy.get('ul>li').each(($el, index, $list) => {
+  // $el is a wrapped jQuery element
+  if ($el.someMethod() === 'something') {
+    // wrap this element so we can
+    // use cypress commands on it
+    cy.wrap($el).click()
+  } else {
+    // do something else
+  }
+})
+```
+
+
