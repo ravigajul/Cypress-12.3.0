@@ -12,4 +12,15 @@ describe('File Upload', () => {
         cy.get('#submit-button').click()
         
     });
+
+    it.only('upload file', () => {
+        cy.visit('https://tiiny.host/')
+        //Please note that css selector below has to be of type input
+        cy.get('#content-selector-tabpane-html input[type="file"]').selectFile('cypress/fixtures/fileupload.html', {
+            action: 'drag-drop',
+            force:true
+          },)
+        cy.contains('[type="submit"]','Upload').click()
+        cy.get('div.validation-error').invoke('text').should('contain','Please enter a real email address')
+    });
 });

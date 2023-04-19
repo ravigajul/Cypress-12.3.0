@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>File Upload by Drag and Drop</title>
+</head>
+<body>
+	<h2>Drag and Drop File Upload</h2>
+	<form action="#" id="fileUploadForm">
+		<div>
+			<label for="fileInput">Select a file:</label>
+			<input type="file" id="fileInput" name="fileInput" onchange="handleFileSelect(event)">
+		</div>
+		<div id="fileList"></div>
+		<br>
+		<button type="submit" onclick="uploadFile()">Submit</button>
+	</form>
+
+	<script>
+		function handleFileSelect(event) {
+			event.stopPropagation();
+			event.preventDefault();
+			var fileList = event.dataTransfer.files;
+			var output = [];
+			for (var i = 0; i < fileList.length; i++) {
+				output.push('<li><strong>', escape(fileList[i].name), '</strong> (', fileList[i].type || 'n/a', ') - ',
+					fileList[i].size, ' bytes</li>');
+			}
+			document.getElementById('fileList').innerHTML = '<ul>' + output.join('') + '</ul>';
+		}
+
+		function uploadFile() {
+			alert('File is uploaded successfully');
+		}
+
+		var dropZone = document.getElementById('fileUploadForm');
+		dropZone.addEventListener('dragover', function (event) {
+			event.stopPropagation();
+			event.preventDefault();
+			event.dataTransfer.dropEffect = 'copy';
+		}, false);
+
+		dropZone.addEventListener('drop', handleFileSelect, false);
+	</script>
+</body>
+</html>

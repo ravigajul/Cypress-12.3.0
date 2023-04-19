@@ -167,7 +167,18 @@ cy.get('#element-id').then(($el) => {
 ## File Upload
 
 ```javascript
+//when the input text box is available 
 cy.get('input[type="file"]').selectFile('cypress/fixtures/Laptop-icon.JPG');
+
+//when the text box is not available and had to drag and drop
+it.only('upload file', () => {
+cy.visit('https://tiiny.host/')
+//Please note that css selector below has to be of type input
+cy.get('#content-selector-tabpane-html input[type="file"]').selectFile('cypress/fixtures/fileupload.html', {
+action: 'drag-drop',
+force:true
+},)
+});
 ```
 
 ## Fetching text from alerts
