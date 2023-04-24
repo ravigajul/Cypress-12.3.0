@@ -1,5 +1,5 @@
 ///<reference types="cypress"/>
-describe('Iteration', () => {
+describe('Iterate over elements', () => {
     it('Iterate over the element and print it', () => {
         cy.visit("https://automationteststore.com/"); 
         cy.get('a[href*="product/category&path"]').contains('Makeup').click();
