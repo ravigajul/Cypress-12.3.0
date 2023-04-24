@@ -1,12 +1,13 @@
 ///<reference types="cypress"/>
 describe('API POSt Call', () => {
-    it('Should generate token after successfull post call', {failOnStatusCode: false},() => {
+    it('Should generate token after successfull post call',() => {
         cy.request({
             url: "https://api.realworld.io/api/users/login",
             method: 'POST',
             headers:{
                 "Content-Type": "application/json"
             },
+            failOnStatusCode: false,
             body:
                 {
                     "user": {
@@ -31,13 +32,12 @@ describe('API POSt Call', () => {
                         "description": "This is to learn call chaining",
                         "body": "posting a new article22"
                     }
-                }
+                },
+                failOnStatusCode: false
 
             }).then(result=>{
                 cy.log(JSON.stringify(result))
             })
-
-            
         })
     });
 });

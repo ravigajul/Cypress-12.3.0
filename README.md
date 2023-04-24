@@ -299,4 +299,47 @@ cy.get('ul>li').each(($el, index, $list) => {
 })
 ```
 
+## API POST Call
 
+```javascript
+it('Should generate token after successfull post call',() => {
+        cy.request({
+            url: "<<replace>>",
+            method: 'POST',
+            headers:{
+                "Content-Type": "application/json"
+            },
+            failOnStatusCode: false,
+            body:
+                {
+                    "user": {
+                        "email": "ravi.gajul@test.com",
+                        "password": "testing!"
+                    }
+                }
+        }).then(resp=>{
+            const token =resp.body.user.token;
+            expect(resp.status).to.equal(200);
+        });
+});
+```
+
+## GRAPHQL Query
+
+```javascript
+it('Should query the graphql', () => {
+        cy.request({
+            url: 'https://countries.trevorblades.com/',
+            method: 'POST',
+            headers:{
+                "content-type": "application/json; charset=utf-8"
+            },
+            body:{
+                query:"{\n  countries {\n    capital\n    currency\n  }\n}"}
+        }).then(response=>{
+            const resp = JSON.parse(JSON.stringify(response))
+           cy.log(resp.body.data.countries[0].capital)
+            
+        })
+    })
+```
