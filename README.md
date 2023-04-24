@@ -183,7 +183,7 @@ force:true
 
 ## Fetching text from alerts
 
-https://docs.cypress.io/api/cypress-api/catalog-of-events  
+<https://docs.cypress.io/api/cypress-api/catalog-of-events>  
 
 ```javascript
 cy.on('window:alert',(strAlertText)=>{
@@ -342,4 +342,42 @@ it('Should query the graphql', () => {
             
         })
     })
+```
+
+## Configure Multiple Reports
+
+1. Install the following dependencies  
+
+```javascript
+npm install --save-dev mochawesome mochawesome-merge mochawesome-report-generator
+```
+
+2. Create reporter-config.json at root level as below  
+
+```json
+{
+ "reporterEnabled": "spec, cypress-multi-reporters",
+ "mochaJunitReporterReporterOptions": {
+  "mochaFile": "cypress/results/results-[hash].xml"
+ },
+ "reporterOptions": {
+  "reporterEnabled": "mochawesome",
+  "mochawesomeReporterOptions": {
+   "reportDir": "cypress/results/mochawesome",
+   "quite": true,
+   "overwrite": false,
+   "html": false,
+   "json": true
+  }
+ }
+}
+```
+
+3. run the test and merge the json files
+
+```javascript
+npx cypress run
+//merge all the content into file file mochawesome.json
+npx mochawesome-merge cypress/results/mochawesome/*.json>mochawesome.json
+npx marge mochawesome.json
 ```

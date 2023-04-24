@@ -10,9 +10,15 @@ module.exports = defineConfig({
         //clears the screnshots folder
        trashAssetsBeforeRuns: true,
        projectId: "vbf6o8"
+       
   },
   env: {
     cyConfigBaseUrl:'https://example.cypress.io',
-  }
+  },
+
+  reporter: 'cypress-multi-reporters',
+  reporterOptions: {
+    configFile: 'reporter-config.json',
+  },
   
 });
