@@ -299,6 +299,25 @@ cy.get('ul>li').each(($el, index, $list) => {
 })
 ```
 
+## Compare Table Headers
+
+```javascript
+it.only('Should validate the headers of the table by comparing two arrays', () => {
+        cy.visit("http://www.webdriveruniversity.com/Data-Table/index.html"); 
+        const expectedHeaders = ['Firstname', 'Lastname', 'Age'];
+        const actualHeaders = [];    
+        cy.get('#t01 tbody tr th').each(($el, index, $list) => {
+            cy.wrap($el).invoke('text').then((headerText) => {
+                actualHeaders.push(headerText);
+            }).then(() => {
+                if (index === $list.length - 1) {
+                    expect(actualHeaders).to.deep.equal(expectedHeaders);
+                }
+            });
+        });
+    });
+```
+
 ## API POST Call
 
 ```javascript
