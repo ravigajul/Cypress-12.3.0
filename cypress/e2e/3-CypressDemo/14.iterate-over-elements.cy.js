@@ -15,6 +15,7 @@ describe('Iterate over elements', () => {
             if($el.text().includes('Viva Glam Lipstick'))
             {
                 cy.wrap($el).click();
+                return false;
             }
         });
     });
@@ -44,7 +45,7 @@ describe('Iterate over elements', () => {
         });
     });
 
-    it.only('Should validate the content of the table by comparing two arrays', () => {
+    it('Should validate the content of the table by comparing two arrays', () => {
         cy.visit("http://www.webdriveruniversity.com/Data-Table/index.html"); 
         const expectedValues = ['John', 'Smith', '45','Jemma','Jackson','94','Michael','Doe','20'];
         const actualValues = [];    
