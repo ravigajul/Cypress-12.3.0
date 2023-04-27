@@ -29,7 +29,7 @@ describe('Iterate over elements', () => {
         });
     });
 
-    it.only('Should validate the headers of the table by comparing two arrays', () => {
+    it('Should validate the headers of the table by comparing two arrays', () => {
         cy.visit("http://www.webdriveruniversity.com/Data-Table/index.html"); 
         const expectedHeaders = ['Firstname', 'Lastname', 'Age'];
         const actualHeaders = [];    
@@ -43,4 +43,21 @@ describe('Iterate over elements', () => {
             });
         });
     });
+
+    it.only('Should validate the content of the table by comparing two arrays', () => {
+        cy.visit("http://www.webdriveruniversity.com/Data-Table/index.html"); 
+        const expectedValues = ['John', 'Smith', '45','Jemma','Jackson','94','Michael','Doe','20'];
+        const actualValues = [];    
+        cy.get('#t01 tbody tr td').each(($el, index, $list) => {
+            cy.wrap($el).invoke('text').then((value) => {
+                actualValues.push(value);
+            }).then(() => {
+                if (index === $list.length - 1) {
+                    expect(actualValues).to.deep.equal(expectedValues);
+                }
+            });
+        });
+    });
+
+    
 });
