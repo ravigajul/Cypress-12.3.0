@@ -19,7 +19,7 @@
 		"mochawesome-merge": "npx mochawesome-merge cypress/results/mochawesome/*.json > mochawesome.json",
 		"mochawesome-marge": "npx marge mochawesome.json",
 		"generate-htmlreport": "npm run mochawesome-merge && npm run mochawesome-marge",
-		"delete-results":"rm -rf cypress/results/* || true",
+		"delete-results": "rm -rf cypress/results/* || true",
 		"delete-report": "rm -rf mochawesome-report/* || true"
 	},
 	"keywords": [],
@@ -30,11 +30,16 @@
 		"prettier": "^2.8.1"
 	},
 	"devDependencies": {
+		"cypress-cucumber-preprocessor": "^4.3.1",
 		"cypress-multi-reporters": "^1.6.3",
 		"eslint-plugin-cypress": "^2.13.2",
 		"mocha-junit-reporter": "^2.2.0",
 		"mochawesome": "^7.1.3",
 		"mochawesome-merge": "^4.3.0",
 		"mochawesome-report-generator": "^6.2.0"
-	}
+	},
+	"cypress-cucumber-preprocessor": {
+		"nonGlobalStepDefinitions": false,
+		"stepDefinitions":"cypress/support/step_definitions"
+	  }
 }

@@ -1,10 +1,13 @@
 const { defineConfig } = require("cypress");
+const cucumber=require("cypress-cucumber-preprocessor").default;
 
 module.exports = defineConfig({
   e2e: {
       //implement node event listeners here
-      
-      specPattern: "cypress/e2e/3-CypressDemo/*.js",
+      setupNodeEvents(on,config){
+        on('file:preprocessor',cucumber())
+      },
+      specPattern: "cypress/e2e/**/*.{js,feature}",
       screenshotOnRunFailure: true,
       screenshotsFolder: 'cypress/screenshots',
         //clears the screnshots folder

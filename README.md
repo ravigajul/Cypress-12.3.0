@@ -317,8 +317,11 @@ it.only('Should validate the headers of the table by comparing two arrays', () =
         });
     });
 ```
+
 ## Exit each() Loop
+
 Use return false to exit the loop  
+
 ```javascript
 it('Iterate over the element and click on a matching product', () => {
         cy.visit("https://automationteststore.com/"); 
@@ -414,4 +417,49 @@ npx cypress run
 //merge all the content into file file mochawesome.json
 npx mochawesome-merge cypress/results/mochawesome/*.json>mochawesome.json
 npx marge mochawesome.json
+```
+
+## Configure Cucumber BDD in Cypress
+
+1.npm install cypress-cucumber-preprocessor --save-dev  
+2.Add the below object in package.json  
+
+```javascript
+"cypress-cucumber-preprocessor": {
+  "nonGlobalStepDefinitions": false,
+  "stepDefinitions":"cypress/support/step_definitions"
+   }
+```
+
+3.update the cypress.config.js  
+
+```javascript
+const cucumber=require("cypress-cucumber-preprocessor").default;
+module.exports = defineConfig({
+  e2e: {
+      //implement node event listeners here
+      setupNodeEvents(on,config){
+        on('file:preprocessor',cucumber())
+      },
+      specPattern: "cypress/e2e/**/*.{js,feature}",
+  }})
+```
+
+4.File-->Preferences-->Settings->Cucumber Auto Complete Settings -> Edit Settings.json
+
+```javascript
+"cucumberautocomplete.customParameters": [],
+    "cucumberautocomplete.strictGherkinCompletion": true,
+    "cucumberautocomplete.steps": ["cypress/support/step_definitions/*.js"]
+```
+
+5.Create respective functions in steps.js  
+
+```javascript
+
+import {Before,Given,When,Then,And} from "cypress-cucumber-preprocessor/steps";
+Given("I navigate to the application",()=>{
+    cy.visit("http://testing.com');
+});
+
 ```
