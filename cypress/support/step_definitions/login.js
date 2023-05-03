@@ -4,7 +4,7 @@ Before(()=>{
     cy.log('Executing before step')
     stub = cy.stub()
 
-})
+});
 Given("I navigate to the application",()=>{
     cy.visit("http://www.webdriveruniversity.com/Login-Portal/index.html")
 });
@@ -33,7 +33,7 @@ Then('I should be logged in',()=>{
 }); 
 
 And('The alert is shown with message {word} {word}',(message1,message2)=>{
-    const expectedMessage = message1+" " + message2;
+    const expectedMessage = message1+ " " + message2;
     cy.log(stub.getCall(0).lastArg);
     expect(stub.getCall(0).lastArg).to.equal(expectedMessage);
 });

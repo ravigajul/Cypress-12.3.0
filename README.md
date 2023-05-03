@@ -463,3 +463,42 @@ Given("I navigate to the application",()=>{
 });
 
 ```
+
+6.Run the scenarios for specific tags
+```javascript
+npx cypress run  -e TAGS="@Regression" --spec "cypress/e2e/4-Cucumber/features/*.feature"
+```
+
+## Page Object Modelling
+
+1.Create a page object  
+
+```javascript
+class HomePage{
+    GoToHomePage(){
+        cy.visit(Cypress.env("webUnivUrl"));
+    }
+    ClickOnContactUS(){
+        cy.get('#contact-us').invoke("removeAttr",'target').click();
+    }
+}
+
+export default HomePage; 
+```
+
+2.Access this object and call its methods in the spec
+
+```javascript
+///<reference types="cypress"/>
+import HomePage from "../../support/pageobjects/webdriver-uni/HomePage"
+import ContactUSPage from "../../support/pageobjects/webdriver-uni/ContactUSPage";
+describe('POM Example', () => {
+    const homePage = new HomePage();
+    const contactUsPage= new ContactUSPage();
+    it('should navigate to the home page of webdriver university', () => {
+        homePage.GoToHomePage();
+        homePage.ClickOnContactUS();
+        contactUsPage.FillAndSubmitForm("Ravi","Gajul","ravi.gajul@test.com","test comment")
+    })
+})
+```

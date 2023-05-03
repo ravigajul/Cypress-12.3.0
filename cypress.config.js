@@ -17,6 +17,7 @@ module.exports = defineConfig({
   },
   env: {
     cyConfigBaseUrl:'https://example.cypress.io',
+    webUnivUrl:"http://www.webdriveruniversity.com/"
   },
 
   reporter: 'cypress-multi-reporters',
