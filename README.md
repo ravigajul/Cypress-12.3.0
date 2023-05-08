@@ -421,8 +421,9 @@ npx marge mochawesome.json
 
 ## Configure Cucumber BDD in Cypress
 
-1.npm install cypress-cucumber-preprocessor --save-dev  
-2.Add the below object in package.json  
+1.npm install --save-dev   @badeball/cypress-cucumber-preprocessor  
+2.npm install  --save-dev  @bahmutov/cypress-esbuild-preprocessor  
+3.Add the below object in package.json  
 
 ```javascript
 "cypress-cucumber-preprocessor": {
@@ -434,15 +435,45 @@ npx marge mochawesome.json
 3.update the cypress.config.js  
 
 ```javascript
-const cucumber=require("cypress-cucumber-preprocessor").default;
-module.exports = defineConfig({
-  e2e: {
-      //implement node event listeners here
-      setupNodeEvents(on,config){
-        on('file:preprocessor',cucumber())
-      },
-      specPattern: "cypress/e2e/**/*.{js,feature}",
-  }})
+import { defineConfig } from 'cypress'
+import * as createBundler from "@bahmutov/cypress-esbuild-preprocessor";
+import { addCucumberPreprocessorPlugin } from '@badeball/cypress-cucumber-preprocessor'
+import createEsbuildPlugin from '@badeball/cypress-cucumber-preprocessor/esbuild'
+
+export default defineConfig({
+ e2e: {
+  specPattern: '**/*.feature',
+  screenshotOnRunFailure: true,
+  screenshotsFolder: 'cypress/screenshots',
+  //clears the screnshots folder
+  trashAssetsBeforeRuns: true,
+  projectId: 'vbf6o8',
+  async setupNodeEvents(
+   on: Cypress.PluginEvents,
+   config: Cypress.PluginConfigOptions
+  ): Promise<Cypress.PluginConfigOptions> {
+   // This is required for the preprocessor to be able to generate JSON reports after each run, and more,
+   await addCucumberPreprocessorPlugin(on, config)
+   on(
+    'file:preprocessor',
+    createBundler({
+     plugins: [createEsbuildPlugin(config)],
+    })
+   )
+   // Make sure to return the config object as it might have been modified by the plugin.
+   return config
+  },
+ },
+ env: {
+  cyConfigBaseUrl: 'https://example.cypress.io',
+  webUnivUrl: 'http://www.webdriveruniversity.com/',
+ },
+  reporter: 'cypress-multi-reporters',
+  reporterOptions: {
+    configFile: 'reporter-config.json',
+  },
+})
+
 ```
 
 4.File-->Preferences-->Settings->Cucumber Auto Complete Settings -> Edit Settings.json
@@ -456,8 +487,8 @@ module.exports = defineConfig({
 5.Create respective functions in steps.js  
 
 ```javascript
-
-import {Before,Given,When,Then,And} from "cypress-cucumber-preprocessor/steps";
+//Note And is deprecated to be used in step defs . however it can still be used in Feature file
+import {Before,Given,When,Then} from "@badeball/cypress-cucumber-preprocessor";
 Given("I navigate to the application",()=>{
     cy.visit("http://testing.com');
 });
@@ -465,9 +496,28 @@ Given("I navigate to the application",()=>{
 ```
 
 6.Run the scenarios for specific tags
+
 ```javascript
-npx cypress run  -e TAGS="@Regression" --spec "cypress/e2e/4-Cucumber/features/*.feature"
+//passing specs along with tags
+npx cypress run  -e TAGS="@regression" --spec "cypress/e2e/4-Cucumber/features/*.feature"
+//run in chrome browser headed
+npx cypress run -e TAGS='@regression' --browser chrome --headed
+
+//using or condition
+npx cypress run -e TAGS='@smoke or @error' --browser chrome --headed
+
+//complex expression
+ npx cypress run -e TAGS='(@smoke or  @error) and not @datadriven' --browser chrome --headed
+
 ```
+
+## Cucumber Expressions
+
+<https://github.com/cucumber/cucumber-expressions#readme>  
+
+When using {word} in step definition files, the respective word is feature file is not required to be written in '' or "" . {word} represents a single word  
+When using {string} in step definition files, the "" or '' is expected in feature files. {string}
+represents a single or multiple words  
 
 ## Page Object Modelling
 
@@ -502,3 +552,15 @@ describe('POM Example', () => {
     })
 })
 ```
+
+## Dependency version check and upgrade
+
+```javascript
+//Check the current version
+npm list @badeball/cypress-cucumber-preprocessor
+//Determine the latest version
+npm view @badeball/cypress-cucumber-preprocessor version
+//Update the package by running the command
+npm install @badeball/cypress-cucumber-preprocessor@<latest-version> --save-dev. 
+```
+
