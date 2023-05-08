@@ -21,7 +21,7 @@
 		"generate-htmlreport": "npm run mochawesome-merge && npm run mochawesome-marge",
 		"delete-results": "rm -rf cypress/results/* || true",
 		"delete-report": "rm -rf mochawesome-report/* || true",
-		"cypress-cucumber-test": "npx cypress run  -e TAGS='@Regression' --spec 'cypress/e2e/4-Cucumber/features/*.feature'"
+		"cypress-cucumber-test": "cypress run  -e TAGS='@Regression' --spec 'cypress/e2e/4-Cucumber/features/*.feature'"
 	},
 	"keywords": [],
 	"author": "",
