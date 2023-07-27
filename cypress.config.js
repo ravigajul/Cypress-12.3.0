@@ -22,10 +22,4 @@ module.exports = defineConfig({
     cyConfigBaseUrl:'https://example.cypress.io',
     webUnivUrl:"http://www.webdriveruniversity.com/"
   },
-
-  reporter: 'cypress-multi-reporters',
-  reporterOptions: {
-    configFile: 'reporter-config.json',
-  },
-  
-});
+ });

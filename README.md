@@ -363,6 +363,32 @@ describe('Iterate over elements', () => {
 });
 ```
 
+## Environment variables
+
+1. One can access Cypress.env("variable") to retrieve the environment variable from cypress.config.js
+2. One can also create a cypress.env.json and access the values as below
+
+```json
+//cypress.env.json at root location
+{
+    "cypressEnvJsonBaseUrl": "https://thisisfrom.Cypress.env.json/",
+    "user":{
+        "firstname":"Ravi",
+        "lastname":"Gajul"
+    }
+}
+```
+
+```javascript
+it('cypress.env.json', () => {
+        cy.log(Cypress.env('cypressEnvJsonBaseUrl'))
+        cy.log('This supports nested fields and one can have dedicated json files for the respective environments')
+        cy.log('FirstName :', Cypress.env('user').firstname)
+        cy.log('LastName :',Cypress.env('user').lastname)
+        cy.log('env : ', Cypress.env('user'))
+    });
+```
+
 ## API POST Call
 
 ```javascript
