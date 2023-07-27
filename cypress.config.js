@@ -1,11 +1,11 @@
 const { defineConfig } = require("cypress");
-const cucumber=require("cypress-cucumber-preprocessor").default;
+// const cucumber=require("cypress-cucumber-preprocessor").default;
 
 module.exports = defineConfig({
   e2e: {
       //implement node event listeners here
       setupNodeEvents(on,config){
-        on('file:preprocessor',cucumber())
+       
       },
       specPattern: "cypress/e2e/**/*.{js,feature}",
       baseUrl:"http://www.google.com",
