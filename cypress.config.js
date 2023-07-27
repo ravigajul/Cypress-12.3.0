@@ -8,11 +8,14 @@ module.exports = defineConfig({
         on('file:preprocessor',cucumber())
       },
       specPattern: "cypress/e2e/**/*.{js,feature}",
+      baseUrl:"http://www.google.com",
+      excludeSpecPattern:["cypress/e2e/1-getting-started/*.js","cypress/e2e/2-advanced-examples/*.js"],
       screenshotOnRunFailure: true,
       screenshotsFolder: 'cypress/screenshots',
         //clears the screnshots folder
        trashAssetsBeforeRuns: true,
-       projectId: "vbf6o8"
+       projectId: "vbf6o8",
+       defaultCommandTimeout:10000
        
   },
   env: {

@@ -320,7 +320,7 @@ it.only('Should validate the headers of the table by comparing two arrays', () =
 
 ## Exit each() Loop
 
-Use return false to exit the loop  
+Use return false to exit the loop.
 
 ```javascript
 it('Iterate over the element and click on a matching product', () => {
@@ -334,6 +334,33 @@ it('Iterate over the element and click on a matching product', () => {
             }
         });
     });
+```
+
+The above loop may not break in which case the logic below to stop the loop
+
+```javascript
+describe('Iterate over elements', () => {
+    it('Breaking the loop on meeting a certain condition', () => {
+        cy.visit("http://www.webdriveruniversity.com/Data-Table/index.html");
+        const expectedHeaders = ['Firstname', 'Lastname', 'Age']
+        let flag=false
+        cy.get('#t01 tbody tr th').each(($el, index, $list) => {
+            //return simply will not break the loop since it would have stacked the commands. 
+            //Adding cy.then and a logic to return to get it working
+            cy.then(()=>{
+                if(flag){
+                    return
+                }
+                cy.wrap($el).invoke('text').then((actualHeader) => {
+                    expect(actualHeader).to.deep.equal(expectedHeaders[index]);
+                    if(actualHeader==="Lastname"){
+                        flag=true
+                    }
+                });
+            })
+        });
+    });
+});
 ```
 
 ## API POST Call
@@ -465,6 +492,7 @@ Given("I navigate to the application",()=>{
 ```
 
 6.Run the scenarios for specific tags
+
 ```javascript
 npx cypress run  -e TAGS="@Regression" --spec "cypress/e2e/4-Cucumber/features/*.feature"
 ```
@@ -501,4 +529,18 @@ describe('POM Example', () => {
         contactUsPage.FillAndSubmitForm("Ravi","Gajul","ravi.gajul@test.com","test comment")
     })
 })
+```
+
+## Environment Variable
+
+```javascript
+cypress.env("first_name")
+//to override variable through cmd
+cypress run --spec test.js --env first_name="ravi" --env last_name="Gajul"
+```
+
+## Exclude SpecPattern
+
+```javascript
+      excludeSpecPattern:["cypress/e2e/1-getting-started/*.js","cypress/e2e/2-advanced-examples/*.s"]
 ```
