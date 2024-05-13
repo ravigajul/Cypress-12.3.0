@@ -58,6 +58,8 @@ cy.get('#elementId').invoke('prop', 'innerText').should('contain','test')
 cy.get('.class').then(($sometext)=?{
 const txt =$sometext.text()
 expect(txt).to.match(/wel/)  // here two slashes indicate the regex pattern
+or
+expect(txt).to.match(/welcome.*/) 
 })
 ```
 ## Cypress Actions
