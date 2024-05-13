@@ -53,7 +53,13 @@ cy.get('#elementId').invoke('prop', 'innerText').should('contain','test')
 //remove attribute
  cy.get('#iframe').invoke('removeAttr','target').click();
 ```
-
+## Regex Matching in assertions
+```javascript
+cy.get('.class').then(($sometext)=?{
+const txt =$sometext.text()
+expect(txt).to.match(/wel/)  // here two slashes indicate the regex pattern
+})
+```
 ## Cypress Actions
 
 Refer to this page for different actions like click, select, type, etc
